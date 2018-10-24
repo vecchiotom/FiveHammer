@@ -60,3 +60,8 @@ typings/
 # next.js build output
 .next
 
+# random public files
+.jpg
+.png
+!public/img/Discord_Icon.png
+!public/img/Steam_Icon.png
