@@ -1,0 +1,91 @@
+<div class="container emp-profile">
+    <center>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="profile-img">
+                    {{#if user.discord.username}}
+                    <img src="/img/{{encodedDiscord}}.png" alt=""
+                    />
+                    {{else}}
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" alt=""
+                    />
+                    {{/if}}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="profile-head">
+                    <h5>
+                        {{user.email}}
+                    </h5>
+                    <!--<h6>
+                                        Web Developer and Designer
+                                    </h6>
+                                    <p class="proile-rating">RANKINGS : <span>8/10</span></p>-->
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Following</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Followers</a>
+                        </li>
+                    </ul>
+                    <br>
+                    <div class="tab-content profile-tab" id="myTabContent">
+                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        {{#each user.following}}
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>{{this}}</label>
+                            </div>
+                            <div class="col-md-6">
+                                <a href="/user/{{this}}">{{this}}'s Profile</a>
+                            </div>
+                        </div>
+                        {{else}}
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label>This profile is not following anyone.</label>
+                            </div>
+                        </div>
+                        {{/each}}
+                    </div>
+                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                        {{#each user.followers}}
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>{{this}}</label>
+                            </div>
+                            <div class="col-md-6">
+                                <a href="/user/{{this}}">{{this}}'s Profile</a>
+                            </div>
+                        </div>
+                        {{else}}
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>This profile has no followers yet.</label>
+                            </div>
+                            <div class="col-md-6">
+                                <a href="/user/follow/{{this}}">Be The First One!</a>
+                            </div>
+                        </div>
+                        {{/each}}
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="profile-work">
+                    <p>Recent Activity</p>
+                    <a href="">TODO</a>
+                    <br/>
+                </div>
+            </div>
+            <div class="col-md-8">
+            </div>
+        </div>
+    </center>
+</div>

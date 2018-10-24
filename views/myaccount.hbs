@@ -1,0 +1,93 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <center>
+                <h2>Complete your Profile</h2>
+            </center>
+        </div>
+    </div>
+    <div class="row">
+        {{#if user.discord.username}}
+        <div class="col-md-6">
+            <center>
+                <div class="card" id="discordcard">
+                    <h3 class="card-header text-white card-primary no-margin" id="discordlink">You Have Linked a Discord Account.
+                        <span class="fab fa-discord pull-right" id="discordglyph"></span>
+                    </h3>
+                    <div class="card-block">
+                        <img class="card-img-top" src="img/{{encodedDiscord}}.png" alt="Discord Logo" style="width:30%; height:30%" />
+                        <center>
+                            <h3 class="card-text">{{{user.discord.username}}}</h3>
+                        </center>
+                    </div>
+                </div>
+            </center>
+        </div>
+        {{else}}
+        <div class="col-md-6">
+            <center>
+                <div class="card" id="discordcard">
+                    <h3 class="card-header text-white card-primary no-margin" id="discordlink">You Haven't Linked a Discord Account Yet.
+                        <span class="fab fa-discord pull-right" id="discordglyph"></span>
+                    </h3>
+                    <div class="card-block">
+                        <img class="card-img-top" src="img/Discord_Icon.png" alt="Discord Logo" style="width:30%; height:30%" />
+                        <center>
+                            <a href="https://discordapp.com/api/oauth2/authorize?client_id=504304069184192522&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fauth%2Fdiscord%2Freturn&response_type=code&scope=identify&state={{{user.email}}}" class="btn btn-primary">
+                                <i class="fab fa-discord"></i> Link Your Discord Account!</a>
+                        </center>
+                    </div>
+                </div>
+            </center>
+        </div>
+        {{/if}}
+        {{#if user.steam}}
+        <div class="col-md-6">
+            <center>
+                <div class="card" id="discordcard">
+                    <h3 class="card-header text-white card-primary no-margin" id="steamlink">You Have Linked a Steam Account.
+                        <span class="fab fa-steam pull-right" id="discordglyph"></span>
+                    </h3>
+                    <div class="card-block">
+                        <img class="card-img-top" src="img/{{encodedSteam}}.jpg" alt="Discord Logo" style="width:30%; height:30%" />
+                        <center>
+                            <h3 class="card-text">{{{user.steam}}}</h3>
+                        </center>
+                    </div>
+                </div>
+            </center>
+        </div>
+        {{else}}
+        <div class="col-md-6">
+            <center>
+                <div class="card" id="discordcard">
+                    <h3 class="card-header text-white card-primary no-margin" id="steamlink">You Haven't Linked a Steam Account Yet.
+                        <span class="fab fa-steam pull-right" id="discordglyph"></span>
+                    </h3>
+                    <div class="card-block">
+                        <img class="card-img-top" src="img/Steam_Icon.png" alt="Steam Logo" style="width:30%; height:30%" />
+                        <center>
+                            <a href="{{{href}}}" class="btn btn-primary">
+                                <i class="fab fa-steam"></i> Link Your Steam Account!</a>
+                        </center>
+                    </div>
+                </div>
+            </center>
+        </div>
+        {{/if}}
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+        </div>
+        <div class="col-md-6">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4">
+        </div>
+    </div>
+</div>

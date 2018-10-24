@@ -1,0 +1,69 @@
+/*!
+ * Start Bootstrap - Scrolling Nav (https://startbootstrap.com/template-overviews/scrolling-nav)
+ * Copyright 2013-2017 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-scrolling-nav/blob/master/LICENSE)
+ */
+
+header {
+  padding: 154px 0 100px;
+}
+
+.container-fluid {
+  padding: 154px 0 100px;
+}
+
+form {
+  width: 30%;
+}
+
+@media (min-width: 992px) {
+  header {
+    padding: 156px 0 100px;
+  }
+}
+
+section {
+  padding: 150px 0;
+}
+
+footer {
+  position: fixed;
+  width:100%;
+  bottom: 0px;
+}
+body {
+  background: url("https://images7.alphacoders.com/587/587535.jpg") no-repeat center;
+
+}
+
+section {
+  background-color: rgba(122, 122, 122, 0.4);
+
+}
+
+.form-control-borderless {
+  border: none;
+}
+
+.form-control-borderless:hover, .form-control-borderless:active, .form-control-borderless:focus {
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
+#discordlink {
+  background-color: rgb(114,137,218);
+}
+
+#discordglyph {
+  font-size: 200%;
+ 
+}
+
+#discordcard {
+  width: 50%;
+}
+
+#steamlink {
+  background-color: rgb(6, 57, 97);
+}
