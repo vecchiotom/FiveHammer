@@ -12,6 +12,10 @@ const email = require('./email.js')
 const Schema = mongoose.Schema
 
 const UserSchema = Schema({
+	username: {
+		type: String,
+		required: true,
+	},
 	email: {
 		type: String,
 		trim: true,
@@ -33,7 +37,7 @@ const UserSchema = Schema({
 
 		username: {
 			type: String,
-			unique: true,
+			unique: false,
 			default: ""
 		},
 		access_token: {
@@ -47,19 +51,11 @@ const UserSchema = Schema({
 			default: ""
 		}
 	},
-	banlist: [{
-		identifiers: [String],
-		reason: {
-			type: String,
-			unique: false,
-			default: ""
-		}
-	}],
 	follows: [String],
 	followers: [String],
 	steam: {
 		type: String,
-		unique: true,
+		unique: false,
 		default: ""
 	},
 	token: {
@@ -73,6 +69,24 @@ const UserSchema = Schema({
 	},
 	isAdmin: {
 		type: Boolean
+	}
+})
+
+const BannedUserSchema = Schema({
+	identifiers: [String]
+})
+
+const BanEntrySchema = Schema({
+	user: BannedUserSchema,
+	reason: {
+		type: String,
+		unique: false,
+		default: ""
+	},
+	owner:{
+		type: String,
+		unique: false,
+		required: true
 	}
 })
 
@@ -118,6 +132,8 @@ const comparePassword = function (user, password, cb) {
 }
 
 mongoose.model('User', UserSchema)
+mongoose.model('BannedUser', BannedUserSchema)
+mongoose.model('BanEntry', BanEntrySchema)
 
 // mongoose.model('User').ensureIndexes()
 
@@ -146,9 +162,20 @@ passport.use(new Strategy({
 passport.serializeUser((user, cb) => cb(null, user.id))
 
 passport.deserializeUser(function (id, cb) {
-	mongoose.model('User').findById(id, function (err, user) {
-		if (err) cb(err)
-		else cb(null, user)
+	mongoose.model('User').findById(id, async function (err, user) {
+		if (err) return cb(err)
+		for (let index = 0; index < user.follows.length; index++) {
+			await mongoose.model('User').findOne({email:user.follows[index]},(err,res)=>{
+				user.follows[index] = res
+			})
+		}
+		for (let index = 0; index < user.followers.length; index++) {
+			await mongoose.model('User').findOne({email:user.followers[index]},(err,res)=>{
+				user.followers[index] = res
+			})
+		}
+		console.log(user)
+		cb(null, user)		
 	})
 })
 

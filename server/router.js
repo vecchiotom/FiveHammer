@@ -93,6 +93,7 @@ module.exports = cfg => {
     router.post('/register', (req, res, next) => {
         const User = mongoose.model('User')
         const user = new User({
+            username: req.body.username,
             email: req.body.email,
             password: req.body.password,
             token: makeid(),
@@ -124,10 +125,20 @@ module.exports = cfg => {
     })
     router.get('/user/:email', IsReqAuthenticated, (req,res)=>{
         const User = mongoose.model('User')
-        User.findOne({email:req.params.email},(err,result)=>{
+        User.findOne({email:req.params.email}, async (err,result)=>{
             if (err || !result) return res.json({status:404, error:err || "user not found."})
             if (result.discord.username != "") {
                 var encodedDiscord = encodeURIComponent(`Discord_${req.user.discord.username}`)
+                for (let index = 0; index < result.follows.length; index++) {
+                    await mongoose.model('User').findOne({email:result.follows[index]},(err,r)=>{
+                        result.follows[index] = r
+                    })
+                }
+                for (let index = 0; index < result.followers.length; index++) {
+                    await mongoose.model('User').findOne({email:result.followers[index]},(err,r)=>{
+                        result.followers[index] = r
+                    })
+                }
                 res.render('profile',{
                     user:result,
                     encodedDiscord:encodedDiscord,

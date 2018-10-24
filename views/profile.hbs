@@ -12,10 +12,10 @@
                     {{/if}}
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-xl-8">
                 <div class="profile-head">
                     <h5>
-                        {{user.email}}
+                        {{user.username}}
                     </h5>
                     <!--<h6>
                                         Web Developer and Designer
@@ -33,47 +33,53 @@
                     <div class="tab-content profile-tab" id="myTabContent">
                     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                         {{#each user.follows}}
+                        {{#with this}}
                         <div class="row">
                             <div class="col-md-6">
-                                <label>{{this}}</label>
+                                <label>{{username}}</label>
                             </div>
                             <div class="col-md-6">
-                                <a href="/user/{{this}}">{{this}}'s Profile</a>
+                                <a href="/user/{{email}}">{{username}}'s Profile</a>
                             </div>
                         </div>
+                        {{/with}}
                         {{else}}
+                        {{#with this}}
                         <div class="row">
                             <div class="col-md-12">
                                 <label>This profile is not following anyone.</label>
                             </div>
                         </div>
+                        {{/with}}
                         {{/each}}
                     </div>
                     <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                         {{#each user.followers}}
+                        {{#with this}}
                         <div class="row">
                             <div class="col-md-6">
-                                <label>{{this}}</label>
+                                <label>{{username}}</label>
                             </div>
                             <div class="col-md-6">
-                                <a href="/user/{{this}}">{{this}}'s Profile</a>
+                                <a href="/user/{{email}}">{{username}}'s Profile</a>
                             </div>
                         </div>
+                        {{/with}}
                         {{else}}
+                        {{#with this}}
                         <div class="row">
                             <div class="col-md-6">
                                 <label>This profile has no followers yet.</label>
                             </div>
                             <div class="col-md-6">
-                                <a href="/user/follow/{{this}}">Be The First One!</a>
+                                <a href="/user/follow/{{email}}">Be The First One!</a>
                             </div>
                         </div>
+                        {{/with}}
                         {{/each}}
                     </div>
                 </div>
                 </div>
-            </div>
-            <div class="col-md-2">
             </div>
         </div>
         <div class="row">

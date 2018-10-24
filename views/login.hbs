@@ -1,6 +1,17 @@
 <center>
-    <h1>Sign In</h1> <br><br><hr>
+    <h1>Sign In</h1>
+    <br>
+    <br>
+    <hr>
     <form action="/login" method="POST">
+        <div class="form-group row">
+            <label for="email" class="col-4 col-form-label">Username</label>
+            <div class="col-8">
+                <input id="username" name="username" placeholder="d4nkus3rn4me" type="text" class="form-control here" aria-describedby="emailHelpBlock"
+                    required="required">
+                <span id="emailHelpBlock" class="form-text text-muted">insert your username here.</span>
+            </div>
+        </div>
         <div class="form-group row">
             <label for="email" class="col-4 col-form-label">Email</label>
             <div class="col-8">
