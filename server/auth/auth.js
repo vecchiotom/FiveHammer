@@ -174,7 +174,7 @@ passport.deserializeUser(function (id, cb) {
 				user.followers[index] = res
 			})
 		}
-		console.log(user)
+		//console.log(user)
 		cb(null, user)		
 	})
 })

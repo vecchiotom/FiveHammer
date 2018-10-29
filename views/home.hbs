@@ -2,22 +2,42 @@
     <div class="col-12 col-md-10 col-lg-8">
         <center>
             <h3>Welcome back {{{user.username}}}</h3>
-        <form class="card card-sm">
-            <div class="card-body row no-gutters align-items-center">
-                <div class="col-auto">
-                    <i class="fas fa-search h4 text-body"></i>
+            <form class="card card-sm" method="GET" action="/home">
+                <div class="card-body row no-gutters align-items-center">
+                    <div class="col-auto">
+                        <i class="fas fa-search h4 text-body"></i>
+                    </div>
+                    <!--end of col-->
+                    <div class="col">
+                        <input class="form-control form-control-lg form-control-borderless" type="search" placeholder="Search for servers or admins" name="search">
+                    </div>
+                    <!--end of col-->
+                    <div class="col-auto">
+                        <button class="btn btn-lg btn-success" type="submit">Search</button>
+                    </div>
+                    <!--end of col-->
                 </div>
-                <!--end of col-->
-                <div class="col">
-                    <input class="form-control form-control-lg form-control-borderless" type="search" placeholder="Search for servers or admins">
+            </form>
+            <center>
+                {{#each results}}
+                <br>
+                <div class="card" id="searchresult">
+                    <div class="card-body">
+                        <h4 class="card-title">{{{this.username}}}</h4>
+                        <p class="card-text">{{this.servername}}</p>
+                        {{#if this.followtext}}
+                        <a href="/user/unfollow/{{this.email}}" class="card-link">{{{this.followtext}}}</a>
+                        {{else}}
+                        <a href="/user/follow/{{this.email}}" class="card-link">Follow</a>
+                        {{/if}}
+                        <a href="/user/{{this.email}}" class="card-link">{{this.username}}'s account</a>
+                    </div>
                 </div>
-                <!--end of col-->
-                <div class="col-auto">
-                    <button class="btn btn-lg btn-success" type="submit">Search</button>
-                </div>
-                <!--end of col-->
-            </div>
-        </form>
+                {{else}}
+                <h4>search for someone using the search bar!</h4>
+                {{/each}}
+            </center>
+
         </center>
     </div>
     <!--end of col-->

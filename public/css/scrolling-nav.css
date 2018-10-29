@@ -67,3 +67,9 @@ section {
 #steamlink {
   background-color: rgb(6, 57, 97);
 }
+
+#searchresult {
+  text-align: left;
+  width: 25%;
+  height: 10%
+}

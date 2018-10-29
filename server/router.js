@@ -107,10 +107,29 @@ module.exports = cfg => {
         } else next()
     })
     router.get('/home', IsReqAuthenticated, (req, res) => {
-        res.render('home', {
-            user: req.user,
-            layout: 'authenticated'
-        });
+        const User = mongoose.model('User')
+        var results;
+        if (req.query.search) {
+            var re = new RegExp(req.query.search, "i")
+            User.find({username : { $regex: re, $options: 'ix' }},(err,result)=>{
+                if (err || !result) console.error(err);
+                //console.log("HIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII")
+                //console.log(result)
+                for (let index = 0; index < result.length; index++) {
+                    if (result[index].followers.includes(req.user.email) && req.user.email != result[index].email) result[index].followtext = "Unfollow"
+                    else if (req.user.email == result[index].email) result[index].followtext = "<span class='text-muted'>You can't follow yourself.</span>"
+                    else result[index].followtext = ""
+                    
+                }
+                results = result;
+                res.render('home', {
+                    user: req.user,
+                    layout: 'authenticated',
+                    results:results,
+                });
+            })
+        }
+        
     })
     router.get('/my-account', IsReqAuthenticated, (req, res) => {
         var encodedDiscord = encodeURIComponent(`Discord_${req.user.discord.username}`)
@@ -137,6 +156,7 @@ module.exports = cfg => {
                 for (let index = 0; index < result.followers.length; index++) {
                     await mongoose.model('User').findOne({email:result.followers[index]},(err,r)=>{
                         result.followers[index] = r
+                        console.log(r.username)
                     })
                 }
                 res.render('profile',{
@@ -145,6 +165,17 @@ module.exports = cfg => {
                     layout: 'profile'
                 })
             } else {
+                for (let index = 0; index < result.follows.length; index++) {
+                    await mongoose.model('User').findOne({email:result.follows[index]},(err,r)=>{
+                        result.follows[index] = r
+                    })
+                }
+                for (let index = 0; index < result.followers.length; index++) {
+                    await mongoose.model('User').findOne({email:result.followers[index]},(err,r)=>{
+                        result.followers[index] = r
+                        console.log(r.username)
+                    })
+                }
                 res.render('profile',{
                     user:result,
                     layout: 'profile'
@@ -199,6 +230,19 @@ module.exports = cfg => {
 
 
         })
+    })
+
+    router.get('/user/follow/:email',(req,res)=>{
+        const User = mongoose.model('User')
+        User.findOneAndUpdate({email:req.params.email},{$addToSet:{followers:req.user.email}},()=>{console.log("done")})
+        User.findOneAndUpdate({email:req.user.email},{$addToSet:{follows:req.params.email}},()=>{console.log("done")})
+        res.redirect("back")
+    })
+    router.get('/user/unfollow/:email',(req,res)=>{
+        const User = mongoose.model('User')
+        User.findOneAndUpdate({email:req.params.email},{$pull:{followers:req.user.email}},()=>{console.log("done")})
+        User.findOneAndUpdate({email:req.user.email},{$pull:{follows:req.params.email}},()=>{console.log("done")})
+        res.redirect("back")
     })
 }
 
